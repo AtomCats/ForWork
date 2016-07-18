@@ -4,7 +4,7 @@ package com.company;
  * Created by Admin on 13.07.2016.
  */
 public class EducationalRoom extends DepartmentRoom {
-    private int roomNum;
+    public int roomNum;
     public EducationalRoom(){
 
     }

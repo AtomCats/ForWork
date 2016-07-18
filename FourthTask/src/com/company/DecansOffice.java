@@ -14,7 +14,7 @@ public class DecansOffice extends EducationalRoom implements TimetableRoom {
     }
     @Override
     public void open() {
-        System.out.println("Деканат открывается!");
+        System.out.println("Деканат открывается!\n");
     }
 
     @Override
@@ -22,13 +22,4 @@ public class DecansOffice extends EducationalRoom implements TimetableRoom {
         return dayEnd-dayStart;
     }
 
-    public boolean equals(Object obj){
-        if(super.equals(obj)){
-            DecansOffice dOffice = (DecansOffice)obj;
-            if (this.dName==((DecansOffice) obj).dName){
-                return true;
-            }
-        }
-        return false;
-    }
 }
