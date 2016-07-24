@@ -1,0 +1,2 @@
+delete from employees where fio = 'Бедняков Иван Николаевич';
+delete from company where id = 5;

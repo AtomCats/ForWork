@@ -1,0 +1,2 @@
+select * from employees cross join company where employees.comp_id = company.id;
+select * from employees join company on employees.comp_id = company.id ;

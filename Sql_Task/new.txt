@@ -1,0 +1,2 @@
+CREATE TABLE employees (id SERIAL PRIMARY KEY, fio CHAR(100), office INT, comp_id INT REFERENCES company(id);
+CREATE TABLE access (comp_id INT REFERENCES company(id), floor INT);

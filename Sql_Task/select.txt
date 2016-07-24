@@ -1,0 +1,2 @@
+SELECT * FROM employees WHERE comp_id=1;
+SELECT * FROM employees WHERE comp_id=5;

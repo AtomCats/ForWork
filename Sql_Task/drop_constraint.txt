@@ -1,0 +1,4 @@
+ALTER TABLE employees DROP CONSTRAINT employees_comp_id_fkey;
+alter table employees add constraint employees_comp_id_fkey foreign key (comp_id) references company(id) on update cascade on delete cascade;
+ALTER TABLE access DROP CONSTRAINT access_comp_id_fkey;
+alter table access add constraint access_comp_id_fkey foreign key (comp_id) references company(id) on update cascade on delete cascade;

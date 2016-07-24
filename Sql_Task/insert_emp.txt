@@ -1,0 +1,10 @@
+INSERT INTO employees (fio,office,comp_id) VALUES ('Бедняков Иван Николаевич',301,1);
+INSERT INTO employees (fio,office,comp_id) VALUES ('Дмитрий Валерьевич',301,1);
+INSERT INTO employees (fio,office,comp_id) VALUES ('Расторгуев Андрей Рафикович',509,2);
+INSERT INTO employees (fio,office,comp_id) VALUES ('Пугачева Ирина Рахмановна',509,2);
+INSERT INTO employees (fio,office,comp_id) VALUES ('Глупая Бухгалтерша Эксплорер',605,3);
+INSERT INTO employees (fio,office,comp_id) VALUES ('Директор Антон Александрович',605,3);
+INSERT INTO employees (fio,office,comp_id) VALUES ('Сварщик Анатолий Вассерман',912,4);
+INSERT INTO employees (fio,office,comp_id) VALUES ('Менеджер Клавдия Михайловна',912,4);
+INSERT INTO employees (fio,office,comp_id) VALUES ('Директор Мудак Министерский',516,5);
+INSERT INTO employees (fio,office,comp_id) VALUES ('Зам Рукожоп Зазнавшийся',516,5);
