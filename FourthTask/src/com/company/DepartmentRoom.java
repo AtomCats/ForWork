@@ -1,19 +1,20 @@
 package com.company;
 
-/**
- * Created by Admin on 13.07.2016.
- */
-public class DepartmentRoom {
-    public int floor;
 
-    public DepartmentRoom(){
+public abstract class DepartmentRoom {
+    private int floor;
 
-    }
     public DepartmentRoom(int flr){
         this.floor=flr;
     }
 
-     public void open(){
+    public int setFl(int flr){
+       return this.floor=flr;
     }
+    public int getFloor(){
+        return this.floor;
+    }
+
+      abstract void open();
 
 }

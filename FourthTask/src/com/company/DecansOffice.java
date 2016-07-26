@@ -5,12 +5,13 @@ package com.company;
  */
 public class DecansOffice extends EducationalRoom implements TimetableRoom {
     private String dName;
-    public TimetableRoom tRoom;
-    private static int dayStart=8,dayEnd=18;
+    private TimetableRoom tRoom;
+    private static final int DAY_START=8,DAY_END=18;
 
-    public  DecansOffice(){
-        TimetableRoom a = new TimetableRoomImpl(this.dayStart,this.dayEnd);
-        this.tRoom=a;
+    public  DecansOffice(String decName,int rNum,int flr){
+        super(rNum,flr);
+        dName=decName;
+        tRoom = new TimetableRoomImpl(this.DAY_START,this.DAY_END);
     }
     @Override
     public void open() {
@@ -19,7 +20,7 @@ public class DecansOffice extends EducationalRoom implements TimetableRoom {
 
     @Override
     public int getWorkdaySize() {
-        return dayEnd-dayStart;
+        return tRoom.getWorkdaySize();
     }
 
 }

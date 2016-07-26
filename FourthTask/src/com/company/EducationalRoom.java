@@ -4,11 +4,15 @@ package com.company;
  * Created by Admin on 13.07.2016.
  */
 public class EducationalRoom extends DepartmentRoom {
-    public int roomNum;
-    public EducationalRoom(){
+    private int roomNum;
+
+    @Override
+    void open() {
 
     }
-    public EducationalRoom(int num){
+
+    public EducationalRoom(int num,int flr){
+        super(flr);
         this.roomNum=num;
     }
 
