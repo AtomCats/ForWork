@@ -16,11 +16,16 @@ public class EducationalRoom extends DepartmentRoom {
         this.roomNum=num;
     }
 
+    public int get_rNum(){
+        return this.roomNum;
+    }
     public boolean equals(Object obj){
         if(super.equals(obj)){
-            EducationalRoom eRoom=(EducationalRoom)obj;
-            if (this.roomNum==eRoom.roomNum){
-                return true;
+            if(obj instanceof EducationalRoom) {
+                EducationalRoom eRoom = (EducationalRoom) obj;
+                if (this.roomNum == eRoom.get_rNum()) {
+                    return true;
+                }
             }
         }
         return false;
