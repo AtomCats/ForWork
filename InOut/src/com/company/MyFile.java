@@ -43,16 +43,7 @@ public class MyFile {
             String temp="";
             try(BufferedReader br = new BufferedReader (new FileReader(file)))
             {
-                while((val=br.read())!=-1){
-
-                    if ((char)val==' ' || (char)val=='\n'){
-                        coll.add(temp);
-                        temp="";
-                        continue;
-                    }
-                    temp+=(char)val;
-
-                }
+                ReadFromFile(br,coll);
             }
             catch(IOException ex){
             }
@@ -78,24 +69,8 @@ public class MyFile {
             catch (Exception e){
 
             }
-/*            URL zipUrl = new URL("jar: C://Users//Admin//IdeaProjects//InOut//out.zip");
-            URL entryUrl = new URL("jar:" + zipUrl + "!/out.txt");
-            InputStream is = entryUrl.openStream();*/
-           // URL entryUrl = new URL("jar:" + pathToZip + "!/"+fileName);
-            //URL entryUrl = Main.class.getResource("\\out.zip");
-           // File zipFile = new File(entryUrl.toURI());
-           // ZipFile zip = new ZipFile(zipFile);
-            //InputStream is = zip.getInputStream(zip.getEntry("out.txt"));
-
             try (BufferedReader br = new BufferedReader (new InputStreamReader(stream))){
-                while ((val=br.read())!=-1){
-                    if ((char)val==' ' || (char)val=='\n'){
-                        coll.add(temp);
-                        temp="";
-                        continue;
-                    }
-                    temp+=(char)val;
-                }
+                ReadFromFile(br,coll);
             }
             catch (Exception ex){
 
@@ -107,5 +82,25 @@ public class MyFile {
         }
 
     }
+    public void ReadFromFile(BufferedReader reader,Collection coll){
+        int val;
+        String temp="";
+        try{
+            while((val=reader.read())!=-1){
+
+                if ((char)val==' ' || (char)val=='\n'){
+                    coll.add(temp);
+                    temp="";
+                    continue;
+                }
+                temp+=(char)val;
+
+            }
+
+
+    }
+catch (IOException ex) {
+}
+}
     }
 
