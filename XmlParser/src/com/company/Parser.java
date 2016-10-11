@@ -13,15 +13,15 @@ import java.util.LinkedList;
  */
 public class Parser {
     private String thisElement;
-    Computer computer=new Computer();
-    LinkedList<Computer> computers = new LinkedList<>();
+    MyStructure structure=new MyStructure();
+    LinkedList<MyStructure> structures = new LinkedList<>();
    // boolean component=false;
-    private boolean element,readingType,readingPart,nameType,valueType,attributeType,readDone=false;
+    private boolean nameType,valueType,attributeType,readDone=false,typeOfValue;
     private String name="",value="";
     private String type="",component="";
 
 
-    public LinkedList<Computer> read(String filename){
+    public LinkedList<MyStructure> read(String filename){
         String line;
         char[] chline;
         int counter=0;
@@ -41,48 +41,19 @@ public class Parser {
                         continue;
                     }
 
-/*                    if(chline[i]=='<' && chline[i+1]=='/'){
-                        component="";
-                        i++;
-                        while(chline[i]!='>'){
-                            component=component+chline[i];
-                            i++;
-                        }
-                        i++;
-
-                        if(component.equalsIgnoreCase("/computer")){
-                            computers.add(computer);
-                            computer=new Computer();
-                        }
-                    }*/
 
                     if (readDone){
 
+                        if( value==""){//Attribute value emptiness check
+                            throw new MyException("Name or value cannot be empty!!");
+                        }
 
                         if (component.toLowerCase().contains("component")){
-                            computer.addComponents(name,value);
+                            structure.addComponents(name,value);
                         }
                         else if (component.toLowerCase().contains("attribute")){
-                            computer.setAttributes(name,value);
+                            structure.setAttributes(name,value);
                         }
-
-/*                    if (chline[i]=='<'){ ///открывающая конструкция
-
-                        component="";
-                        i++;
-                        while(chline[i]!='>'){
-                            component=component+chline[i];
-                            i++;
-                        }
-                        i++;
-
-                        if(component.equalsIgnoreCase("/computer")){
-                            computers.add(computer);
-                            computer=new Computer();
-                        }
-                        //component=false;
-                    }*/
-
 
 
                         i=0;
@@ -108,9 +79,9 @@ public class Parser {
                         }
                         i++;
 
-                        if(component.equalsIgnoreCase("/computer")){
-                            computers.add(computer);
-                            computer=new Computer();
+                        if(component.equalsIgnoreCase("/element")){
+                            structures.add(structure);
+                            structure=new MyStructure();
                         }
 
                         continue;
@@ -160,6 +131,10 @@ public class Parser {
                             else if(type.toLowerCase().contains("attribute")){
                                 attributeType=true;
                             }
+
+                            else if(type.toLowerCase().contains("type")){
+
+                            }
                             i++;
                             continue;
                         }
@@ -192,7 +167,16 @@ public class Parser {
     catch (IOException e){
 
     }
-        return computers;
+    catch (MyException e){
+        System.out.println("Name or value cannot be empty!!");
+    }
+        return structures;
+    }
+
+    private void checkForErrors (){
+        for(MyStructure str:structures){
+
+        }
     }
 
 
