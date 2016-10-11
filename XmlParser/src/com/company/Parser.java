@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  * Created by aeryomin on 06.10.2016.
@@ -13,90 +14,177 @@ import java.io.IOException;
 public class Parser {
     private String thisElement;
     Computer computer=new Computer();
-    boolean component=false;
-
-    public void startDocument() throws SAXException {
-        System.out.println("Start parse XML...");
-    }
-    public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
-        thisElement = qName;
-    }
-
-    public void characters(char[] ch, int start, int length) throws SAXException {
-
-        if (thisElement.equalsIgnoreCase("component name")){
-            computer.addComponents(new String(ch, start, length));
-        }
+    LinkedList<Computer> computers = new LinkedList<>();
+   // boolean component=false;
+    private boolean element,readingType,readingPart,nameType,valueType,attributeType,readDone=false;
+    private String name="",value="";
+    private String type="",component="";
 
 
-
-
-        if (thisElement.equals("id")) {
-            doc.setId(new Integer(new String(ch, start, length)));
-        }
-        if (thisElement.equals("fam")) {
-            doc.setFam(new String(ch, start, length));
-        }
-        if (thisElement.equals("name")) {
-            doc.setName(new String(ch, start, length));
-        }
-        if (thisElement.equals("otc")) {
-            doc.setOtc(new String(ch, start, length));
-        }
-        if (thisElement.equals("dateb")) {
-            doc.setDateb(new String(ch, start, length));
-        }
-        if (thisElement.equals("datep")) {
-            doc.setDatep(new String(ch, start, length));
-        }
-        if (thisElement.equals("datev")) {
-            doc.setDatev(new String(ch, start, length));
-        }
-        if (thisElement.equals("datebegin")) {
-            doc.setDatebegin(new String(ch, start, length));
-        }
-        if (thisElement.equals("dateend")) {
-            doc.setDateend(new String(ch, start, length));
-        }
-        if (thisElement.equals("vdolid")) {
-            doc.setVdolid(new Integer(new String(ch, start, length)));
-        }
-        if (thisElement.equals("specid")) {
-            doc.setSpecid(new Integer(new String(ch, start, length)));
-        }
-        if (thisElement.equals("klavid")) {
-            doc.setKlavid(new Integer(new String(ch, start, length)));
-        }
-        if (thisElement.equals("stav")) {
-            doc.setStav(new Float(new String(ch, start, length)));
-        }
-        if (thisElement.equals("progid")) {
-            doc.setProgid(new Integer(new String(ch, start, length)));
-        }
-    }
-
-    public Object read(String filename){
+    public LinkedList<Computer> read(String filename){
         String line;
         char[] chline;
-        String type="";
+        int counter=0;
         try{
 
-            BufferedReader reader = new BufferedReader(new FileReader("\\.doc.xml"));
-            while ((line=reader.readLine())!=null){
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            while ((line=reader.readLine())!=null){//строк до конца файла
+
                 int i=0;
-                boolean reading=false;
+                component="";
+                readingType=true;
                 chline=line.toCharArray();
-                while(chline[i]!=chline[chline.length]){
-                    if (chline[i]=='<'){
+                while(i!=chline.length){//разбор строки
+
+                    if(chline[i]=='\t'){
+                        i++;
+                        continue;
+                    }
+
+/*                    if(chline[i]=='<' && chline[i+1]=='/'){
+                        component="";
                         i++;
                         while(chline[i]!='>'){
-                            type=type+chline[i];
+                            component=component+chline[i];
                             i++;
                         }
-                    }
-                }
-            }
+                        i++;
 
+                        if(component.equalsIgnoreCase("/computer")){
+                            computers.add(computer);
+                            computer=new Computer();
+                        }
+                    }*/
+
+                    if (readDone){
+
+
+                        if (component.toLowerCase().contains("component")){
+                            computer.addComponents(name,value);
+                        }
+                        else if (component.toLowerCase().contains("attribute")){
+                            computer.setAttributes(name,value);
+                        }
+
+/*                    if (chline[i]=='<'){ ///открывающая конструкция
+
+                        component="";
+                        i++;
+                        while(chline[i]!='>'){
+                            component=component+chline[i];
+                            i++;
+                        }
+                        i++;
+
+                        if(component.equalsIgnoreCase("/computer")){
+                            computers.add(computer);
+                            computer=new Computer();
+                        }
+                        //component=false;
+                    }*/
+
+
+
+                        i=0;
+                        readDone=false;
+                        nameType=false;
+                        valueType=false;
+                        name="";
+                        type="";
+                        value="";
+                        component="";
+                        //continue;
+                        break;
+
+                    }
+
+                    if (chline[i]=='<'){ ///открывающая конструкция
+
+                        //component=true;
+                        i++;
+                        while(chline[i]!='>'){
+                            component=component+chline[i];
+                            i++;
+                        }
+                        i++;
+
+                        if(component.equalsIgnoreCase("/computer")){
+                            computers.add(computer);
+                            computer=new Computer();
+                        }
+
+                        continue;
+                        //component=false;
+                    }
+                    /////Читаем тип значения(имя,ключ,значение или тип аттрибута
+                    if ( i<chline.length && chline[i]!=' ' && chline[i]!='<')
+                    {
+                        if ( chline[i]==34){
+                            i++;
+                            if (nameType && !valueType){
+
+                                while( chline[i]!=34){
+                                    name=name+chline[i];
+                                    i++;
+                                }
+                            }
+
+                            else if(valueType==true ){
+
+                                while(chline[i]!=34){
+                                    value=value+chline[i];
+                                    i++;
+                                }
+                            }
+
+                            if (nameType && valueType){
+                                readDone=true;
+                            }
+                            i++;
+                            type="";
+                        }
+
+                        else{
+
+                            //i++;
+                            while(chline[i]!='='){
+                                type=type+chline[i];
+                                i++;
+                            }
+                            if (type.toLowerCase().contains("name")){
+                                nameType=true;
+                            }
+                            else  if(type.toLowerCase().contains("value") || type.toLowerCase().contains("key")){
+                                valueType=true;
+                            }
+                            else if(type.toLowerCase().contains("attribute")){
+                                attributeType=true;
+                            }
+                            i++;
+                            continue;
+                        }
+                    }
+                    ////Таки читаем значение
+
+
+                    else if (i>=chline.length){
+                        i=chline.length;
+                        readDone=false;
+                        nameType=false;
+                        valueType=false;
+                        name="";
+                        type="";
+                        value="";
+                        component="";
+                    }
+
+                    else
+                        i++;
+
+                }
+
+            }
+        reader.close();
         }
     catch (FileNotFoundException e){
         System.out.println("File not found!");
@@ -104,20 +192,8 @@ public class Parser {
     catch (IOException e){
 
     }
-
+        return computers;
     }
 
-
-    private String[][] makeData(String name,String key){
-        return new String[][]{{name},{key}};
-    }
-
-    private void isComponent(String data){
-        if (data.equalsIgnoreCase("component")){
-            component=true;
-        }
-        else component=false;
-
-    }
 
 }

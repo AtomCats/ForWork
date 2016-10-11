@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Computer {
     private  ArrayList<String[][]> components=new ArrayList<>();
-    private  ArrayList<String> attributes;
+    private  ArrayList<String[][]> attributes=new ArrayList<>();
 
     public Computer(){}
 
@@ -28,8 +28,9 @@ public class Computer {
     }
 
     ////Attributes
-    public void setAttributes(ArrayList attrs){
-        attributes.addAll(attrs);
+    public void setAttributes(String name,String value){
+
+        attributes.add(new String[][]{{name},{value}});
     }
 
     public ArrayList getAttributes(){
