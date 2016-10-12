@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<components>
+
+<computers>
+
+<userStation1>
+<computer name="computer_231">
+
+<ipAddress>127.0.0.1</ipAddress>
+<macAddress>53-5F-E0-9B-54-30</macAddress>
+<printerId attributeType=”integer”>192.168.1.100</printerId>
+
+</computer>
+
+<motherboard>
+<manufacturer>MSI</manufacturer>
+<socket>LGA1151</socket>
+<model>Z170A GAMING M5</model>
+</motherboard>
+
+<processor>
+<socket>LGA1151</socket>
+<name>Intel Core i5 Skylake</name>
+<core>Skylake</core>
+</processor>
+
+<HDD>
+<name>Intel SSDSC2BW240A4K5</name>
+<manufacturer>Intel</manufacturer>
+<type>SSD</type>
+<capacity>240Gb</capacity>
+<interface>SATA 3</interface>
+</HDD>
+
+<RAM>
+<name>Corsair CMK8GX4M2B4133C19</name>
+<manufacturer>Corsair</manufacturer>
+<type>DDR4</type>
+<capacity>4Gb</capacity>
+</RAM>
+
+<PSU>
+<name>FSP Group ATX-500PNR 500W</name>
+<manufacturer>FSP</manufacturer>
+<formFactor>ATX</formFactor>
+<power>500 Watt</power>
+</PSU>
+</userStation1>
+
+<userStation2>
+<computer name="computer_232">
+
+<ipAddress>127.0.0.1</ipAddress>
+<macAddress>53-51-E0-CB-54-BB</macAddress>
+<printerId attributeType=”integer”>192.168.1.101</printerId>
+
+</computer>
+
+<motherboard>
+<manufacturer>AsRock</manufacturer>
+<socket>LGA1151</socket>
+<model>ULTRA UBER SUPER PUPER GAMING M777777</model>
+</motherboard>
+
+<processor>
+<socket>LGA1151</socket>
+<name>Intel Core i7 Skylake</name>
+<core>Skylake</core>
+</processor>
+
+<HDD>
+<name>Intel SSDSC2BW240A4K5</name>
+<manufacturer>Intel</manufacturer>
+<type>SSD</type>
+<capacity>500Gb</capacity>
+<interface>SATA 3</interface>
+</HDD>
+
+<RAM>
+<name>Corsair CMK8GX4M2B4133C19</name>
+<manufacturer>Corsair</manufacturer>
+<type>DDR4</type>
+<capacity>8Gb</capacity>
+</RAM>
+
+<PSU>
+<name>FSP Group ATX-500PNR 800W</name>
+<manufacturer>FSP</manufacturer>
+<formFactor>ATX</formFactor>
+<power>800 Watt</power>
+</PSU>
+</userStation2>
+
+</computers>
+
+<printers>
+
+<printer1>
+<printerId>192.168.1.100</printerId>
+<ipAddress>192.168.1.100</ipAddress>
+<alias>User 1 printer</alias>
+<type>Laser</type>
+</printer1>
+
+<printer2>
+<printerId>192.168.1.101</printerId>
+<ipAddress>192.168.1.101</ipAddress>
+<alias>User 2 printer</alias>
+<type>ink-jet</type>
+</printer2>
+
+</printers>
+
+</components>
