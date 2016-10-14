@@ -1,9 +1,13 @@
 package com.company;
 
-import org.xml.sax.*;
-import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.helpers.DefaultHandler;
+import org.xml.sax.Attributes;
 
+import java.util.LinkedList;
+import java.util.regex.*;
+import static java.lang.System.err;
 import static java.lang.System.out;
 
 /**
@@ -15,10 +19,15 @@ public class Parser extends DefaultHandler {
    // private PrintWriter out;
 
     private int elements;
-    private int attributes;
+    private int attributess;
     private int characters;
     private int ignorableWhitespace;
     private String url;
+    private String fuckingType;
+    private boolean hasType=false;
+    private boolean isNull=false;
+    private String nullName="";
+    Exception ex;
 
     public Parser(String url_str) {
 
@@ -36,7 +45,7 @@ public class Parser extends DefaultHandler {
 
         // Статистика
         elements            = 0;
-        attributes          = 0;
+        attributess          = 0;
         characters          = 0;
         ignorableWhitespace = 0;
 
@@ -51,31 +60,49 @@ public class Parser extends DefaultHandler {
     public void endDocument() {
 
         out.flush();
+        printInfo();
 
     }
 
 // Встретился открывающий тэг элемента //
-
-    public void startElement(String name, Attributes attrs) {
-
+@Override
+public void startElement(String uri,String localName, String qName, Attributes attributes) {
+        isNull=false;
+        fuckingType="";
         elements++;
-        if (attrs != null) {
-            attributes += attrs.getLength();
+        if (attributes != null) {
+            attributess += attributes.getLength();
         }
 
         // Печать тэга элемента вместе со списком его атрибутов,
         // например, <elem id="48">
         out.print('<');
-        out.print(name);
-        if (attrs != null) {
-            int len = attrs.getLength();
+        out.print(qName);
+
+    if (attributes != null) {
+            int len = attributes.getLength();
             for (int i = 0; i < len; i++) {
+
+                if(attributes.getQName(i).equalsIgnoreCase("attributeType")){
+                    fuckingType=attributes.getValue(i);
+                }
+
+                if(attributes.getValue(i).equalsIgnoreCase("")){
+                    isNull=true;
+                    //err.print("\t Attribute value can't be null \t");/////////////////По блядски работает же
+                    //////надо переделать.НЕ ЗАБУДЬ!!!!!!
+                }
                 out.print(' ');
-                out.print(attrs.getQName(i));
+                out.print(attributes.getQName(i));
                 out.print("=\"");
-                out.print(attrs.getValue(i));
+                if(isNull)
+                    out.print("\t Error!Attribute value can't be null. \t");
+                else
+                out.print(attributes.getValue(i));
                 out.print('"');
             }
+
+
         }
         out.println('>');
 
@@ -85,9 +112,9 @@ public class Parser extends DefaultHandler {
 
 // Встретился закрывающий тэг элемента
 
-    public void endElement(String name) {
+    public void endElement(String uri,String localName, String qName)   {
 
-        out.println("</"+name+">");
+        out.println("</"+qName+">");
 
     }
 
@@ -98,6 +125,15 @@ public class Parser extends DefaultHandler {
         characters += length;
 
         out.println(new String(ch, start, length));
+
+        String tempString = new String(ch, start, length);
+        if (!tempString.equals("\n\n") && !tempString.equals("\n")) {
+
+            if (!fuckingType.equals("") && !checkWithRegExp(tempString, fuckingType)) {
+                out.print("Тип значения не соответствует указанному");
+            }
+
+        }
 
     }
 
@@ -163,10 +199,51 @@ public class Parser extends DefaultHandler {
         out.println("Документ "+url+" был успешно обработан");
 
         out.println("Элементов : "+elements);
-        out.println("Атрибутов : "+attributes);
+        out.println("Атрибутов : "+attributess);
         out.println("Символов  : "+characters);
 
     }
+
+    public static boolean checkWithRegExp(String str,String type){
+        Pattern p=null;
+        Matcher m=null;
+        boolean result=false;
+        if (type.equalsIgnoreCase("string")){
+            p = Pattern.compile("^[a-zA-Z.]+");
+        }
+
+        else if(type.equalsIgnoreCase("integer")){
+            p = Pattern.compile("^[0-9.]+");
+
+        }
+
+        else if(type.equalsIgnoreCase("boolean")){
+            p = Pattern.compile("^([Tt]rue|[Ff]alse)$");
+        }
+
+        else if(type.equalsIgnoreCase("double")){
+            p = Pattern.compile("^(0-9)+\\.(0-9)+$");
+        }
+        try {
+            m = p.matcher(str);
+            result= m.matches();
+        }
+        catch (NullPointerException e){
+
+        }
+        return result;
+    }
+
+    private void checkForMatchingIps(LinkedList data){
+
+    }
+    private void checkComponents(LinkedList data){
+
+    }
+
+
+
+
 
 }
 

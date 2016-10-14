@@ -17,9 +17,9 @@ public class Main {
         try{
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
-            Parser saxp = new Parser("doc.xml");
+            Parser saxp = new Parser("doc1.xml");
+            parser.parse(new File("doc1.xml"), saxp);
 
-            parser.parse(new File("doc.xml"), saxp);
         }
         catch (SAXException e){
 
