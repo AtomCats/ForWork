@@ -5,6 +5,7 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.Attributes;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.regex.*;
 import static java.lang.System.err;
@@ -17,7 +18,9 @@ public class Parser extends DefaultHandler {
 
 
    // private PrintWriter out;
-
+    Structure list = new Structure();
+    LinkedHashMap attrMap = new LinkedHashMap<String,String >();
+    LinkedHashMap temp;
     private int elements;
     private int attributess;
     private int characters;
@@ -26,9 +29,14 @@ public class Parser extends DefaultHandler {
     private String fuckingType;
     private boolean hasType=false;
     private boolean isNull=false;
+    private boolean previous=false;
+    private boolean tagClosed = true;
+    private boolean isRoot=false;
     private String nullName="";
-    Exception ex;
-
+    private int catIndex=0,subjIndex=0,compIndex=0,attrIndex=0,propIndex=0;
+    int counter=0;
+    private String tempString;
+    String elementName;
     public Parser(String url_str) {
 
         url = url_str;
@@ -36,11 +44,7 @@ public class Parser extends DefaultHandler {
     }
 
 
-//=======================================================
-// Обработчики событий. Методы интерфейса DocumentHandler
-//========================
-
-    // Начало документа
+    // Начало
     public void startDocument() {
 
         // Статистика
@@ -56,7 +60,7 @@ public class Parser extends DefaultHandler {
 
     }
 
-    // Конец документа
+    // Конец
     public void endDocument() {
 
         out.flush();
@@ -64,14 +68,39 @@ public class Parser extends DefaultHandler {
 
     }
 
-// Встретился открывающий тэг элемента //
+///если встретился <
 @Override
 public void startElement(String uri,String localName, String qName, Attributes attributes) {
+
+    elementName=qName;
         isNull=false;
         fuckingType="";
         elements++;
         if (attributes != null) {
             attributess += attributes.getLength();
+        }
+        if (counter==1){
+            list.newCategory(qName);
+            subjIndex=0;
+            compIndex=0;
+            attrIndex=0;
+            propIndex=0;
+            catIndex++;
+        }
+        else if(counter==2){
+
+            list.newSubj(catIndex-1,qName);
+            subjIndex++;
+            compIndex=0;
+            attrIndex=0;
+            propIndex=0;
+        }
+
+        else if(counter==3){
+            list.newComponent(subjIndex-1,qName);
+            compIndex++;
+            attrIndex=0;
+            propIndex=0;
         }
 
         // Печать тэга элемента вместе со списком его атрибутов,
@@ -82,16 +111,17 @@ public void startElement(String uri,String localName, String qName, Attributes a
     if (attributes != null) {
             int len = attributes.getLength();
             for (int i = 0; i < len; i++) {
-
+                ////////указан или нет тип атрибута?
                 if(attributes.getQName(i).equalsIgnoreCase("attributeType")){
                     fuckingType=attributes.getValue(i);
                 }
-
+                ///////пустой атрибут?
                 if(attributes.getValue(i).equalsIgnoreCase("")){
                     isNull=true;
-                    //err.print("\t Attribute value can't be null \t");/////////////////По блядски работает же
-                    //////надо переделать.НЕ ЗАБУДЬ!!!!!!
                 }
+
+                list.newProperty(qName,attributes.getQName(i),attributes.getValue(i));
+
                 out.print(' ');
                 out.print(attributes.getQName(i));
                 out.print("=\"");
@@ -105,29 +135,33 @@ public void startElement(String uri,String localName, String qName, Attributes a
 
         }
         out.println('>');
-
+        counter++;
 
     }
 
 
-// Встретился закрывающий тэг элемента
 
     public void endElement(String uri,String localName, String qName)   {
 
         out.println("</"+qName+">");
+        counter--;
 
     }
 
-// Текстовые символы
+// текст
 
     public void characters(char ch[], int start, int length) {
 
         characters += length;
 
         out.println(new String(ch, start, length));
+        tempString = new String(ch, start, length);
 
-        String tempString = new String(ch, start, length);
         if (!tempString.equals("\n\n") && !tempString.equals("\n")) {
+
+            if (counter>3){
+                list.newAttribute(compIndex-1,elementName,tempString);
+            }
 
             if (!fuckingType.equals("") && !checkWithRegExp(tempString, fuckingType)) {
                 out.print("Тип значения не соответствует указанному");
@@ -137,13 +171,7 @@ public void startElement(String uri,String localName, String qName, Attributes a
 
     }
 
-// Необрабатываемые символы(например, содержимое секции CDATA)
 
-    public void ignorableWhitespace(char ch[], int start, int length) {
-
-        characters(ch, start, length);
-
-    }
 
 // Инструкции XML-процессору
 
