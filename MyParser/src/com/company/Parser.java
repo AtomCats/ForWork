@@ -152,7 +152,7 @@ public void startElement(String uri,String localName, String qName, Attributes a
             }
 
             if (!fuckingType.equals("") && !checkWithRegExp(tempString, fuckingType)) {
-                out.print("Тип значения не соответствует указанному");
+                out.print("Тип значения элемента "+elementName+" не соответствует указанному, \""+fuckingType+"\"");
             }
 
         }
