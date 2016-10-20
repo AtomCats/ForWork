@@ -8,15 +8,10 @@
 
 <ipAddress>127.0.0.1</ipAddress>
 <macAddress>53-5F-E0-9B-54-30</macAddress>
-<printerId attributeType=”integer”>192.168.1.100</printerId>
+<printerId attributeType="integer">192.168.1.100</printerId>
 
 </computer>
 
-<motherboard>
-<manufacturer>MSI</manufacturer>
-<socket>LGA1151</socket>
-<model>Z170A GAMING M5</model>
-</motherboard>
 
 <processor>
 <socket>LGA1151</socket>
@@ -52,7 +47,7 @@
 
 <ipAddress>127.0.0.1</ipAddress>
 <macAddress>53-51-E0-CB-54-BB</macAddress>
-<printerId attributeType=”integer”>192.168.1.101</printerId>
+<printerId attributeType="integer">192.168.1.101</printerId>
 
 </computer>
 

@@ -47,16 +47,13 @@ public class Parser extends DefaultHandler {
     // Начало
     public void startDocument() {
 
-        // Статистика
         elements            = 0;
         attributess          = 0;
         characters          = 0;
         ignorableWhitespace = 0;
 
 
-        // Процессорные инструкции
 
-        out.println("<?xml version=1.0?>");
 
     }
 
@@ -103,10 +100,6 @@ public void startElement(String uri,String localName, String qName, Attributes a
             propIndex=0;
         }
 
-        // Печать тэга элемента вместе со списком его атрибутов,
-        // например, <elem id="48">
-        out.print('<');
-        out.print(qName);
 
     if (attributes != null) {
             int len = attributes.getLength();
@@ -122,19 +115,16 @@ public void startElement(String uri,String localName, String qName, Attributes a
 
                 list.newProperty(qName,attributes.getQName(i),attributes.getValue(i));
 
-                out.print(' ');
-                out.print(attributes.getQName(i));
-                out.print("=\"");
-                if(isNull)
-                    out.print("\t Error!Attribute value can't be null. \t");
-                else
-                out.print(attributes.getValue(i));
-                out.print('"');
+
+                if(isNull){
+                    out.print(" Error at element "+qName+" , in attribute with name  \""+attributes.getQName(i)+" \" !Attribute value can't be null. \n");
+
+                }
+
             }
 
 
         }
-        out.println('>');
         counter++;
 
     }
@@ -143,7 +133,6 @@ public void startElement(String uri,String localName, String qName, Attributes a
 
     public void endElement(String uri,String localName, String qName)   {
 
-        out.println("</"+qName+">");
         counter--;
 
     }
@@ -154,7 +143,6 @@ public void startElement(String uri,String localName, String qName, Attributes a
 
         characters += length;
 
-        out.println(new String(ch, start, length));
         tempString = new String(ch, start, length);
 
         if (!tempString.equals("\n\n") && !tempString.equals("\n")) {
@@ -229,6 +217,9 @@ public void startElement(String uri,String localName, String qName, Attributes a
         out.println("Элементов : "+elements);
         out.println("Атрибутов : "+attributess);
         out.println("Символов  : "+characters);
+        if (!list.checkComponents(list.categories)){
+        }
+        list.checkForMatchingIps(list.categories);
 
     }
 
@@ -262,12 +253,7 @@ public void startElement(String uri,String localName, String qName, Attributes a
         return result;
     }
 
-    private void checkForMatchingIps(LinkedList data){
 
-    }
-    private void checkComponents(LinkedList data){
-
-    }
 
 
 

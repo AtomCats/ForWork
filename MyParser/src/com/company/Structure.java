@@ -4,6 +4,8 @@ package com.company;
 import java.util.*;
 import java.util.jar.Attributes;
 
+import static java.lang.System.out;
+
 /**
  * Created by aeryomin on 14.10.2016.
  */
@@ -149,5 +151,97 @@ public class Structure {
         }
 
     }
+
+    public void checkForMatchingIps(LinkedList categories){
+
+        LinkedList<String> idFromPc = new LinkedList<>();
+        LinkedList<String> printerId = new LinkedList<>();
+
+        for (Object cat:categories){
+
+            for (Object subj:((Category)cat).subjects){
+
+                for (Object comp: ((Subject)subj).components){
+
+                        for (Object attr: ((Component)comp).attrs){
+
+                            if(((Component)comp).compName.equalsIgnoreCase("computer" )&& ((Attribute)attr).attrName.equalsIgnoreCase("printerid")){
+                                idFromPc.add(((Attribute)attr).attVal);
+                            }
+                            else if(((Component)comp).compName.equalsIgnoreCase("printerid") && ((Attribute)attr).attrName.equalsIgnoreCase("printerid")) {
+                                printerId.add(((Attribute)attr).attVal);
+                            }
+
+                            }
+                }
+            }
+        }
+        int idCount=0;
+        boolean matching=false;
+        for (String id:idFromPc){
+            matching=false;
+            for (String printId:printerId){
+                if (id.equalsIgnoreCase(printId)){
+                    matching=true;
+                }
+            }
+            if (!matching){
+                out.println("Принтер с ID "+id+" отсутствует в списке");
+            }
+        }
+    }
+
+    public boolean checkComponents(LinkedList categories){
+        Boolean good=false;
+        LinkedList<String> componentName = new LinkedList<String>();
+        componentName.add("motherboard");
+        componentName.add("processor");
+        componentName.add("ram");
+        componentName.add("psu");
+        Component testingSubject=new Component("test");
+        int comCounter=0;
+        for (Object cat:categories){
+
+            if(((Category)cat).catName.toLowerCase()=="computers"){
+
+                for (Object subj:((Category)cat).subjects){
+
+                    for (Object comp: ((Subject)subj).components){
+                        switch (((Component)comp).compName.toLowerCase()){
+                            case "motherboard":
+                                good=true;
+                                comCounter++;
+                                componentName.remove("motherboard");
+                                break;
+                            case "processor":
+                                good=true;
+                                comCounter++;
+                                componentName.remove("processor");
+                                break;
+                            case "ram":
+                                good=true;
+                                comCounter++;
+                                componentName.remove("ram");
+                                break;
+                            case "psu":
+                                good=true;
+                                comCounter++;
+                                componentName.remove("psu");
+                                break;
+                        }
+                    }
+                    if ( comCounter<4){
+                        good=false;
+                        out.println("В составе компьютера "+((Subject)subj).subName+" отсутствуют компоненты : ");
+                        for(String missing:componentName){
+                            out.println(missing);
+                        }
+                    }
+                }
+            }
+        }
+    return good;
+    }
+
 
 }
