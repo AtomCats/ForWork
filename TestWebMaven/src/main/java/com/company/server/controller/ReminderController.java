@@ -29,7 +29,7 @@ public class ReminderController {
         return service.getByID(id);
     }
 
-    @RequestMapping(value = "/index.jsp", method = RequestMethod.POST)
+    @RequestMapping(value = "/reminders/save", method = RequestMethod.POST)
     @ResponseBody
     public Remind saveReminder(@RequestBody Remind remind){
 
