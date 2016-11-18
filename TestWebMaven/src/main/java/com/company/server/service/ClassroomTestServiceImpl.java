@@ -3,12 +3,11 @@ package com.company.server.service;
 import com.company.server.entity.Classroom;
 import com.company.server.repository.ClassroomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by aeryomin on 16.11.2016.
- */
+@Service
 public class ClassroomTestServiceImpl implements ClassroomTestService {
 
     @Autowired

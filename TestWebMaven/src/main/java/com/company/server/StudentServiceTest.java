@@ -45,7 +45,6 @@ public class StudentServiceTest {
             student.setName("Denis");
             student.setCource(5);
             studentTestService.save(student);
-            studentTestService.save(student);
         }
 
     }

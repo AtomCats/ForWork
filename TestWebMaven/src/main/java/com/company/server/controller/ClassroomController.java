@@ -39,7 +39,7 @@ public class ClassroomController {
         return service.save(classroom);
     }
 
-    @RequestMapping(value = "/teachers/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/classrooms/{id}", method = RequestMethod.POST)
     @ResponseBody
     public void deleteClassroom(@PathVariable long id){
 

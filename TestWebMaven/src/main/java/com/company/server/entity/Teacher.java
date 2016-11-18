@@ -19,7 +19,7 @@ public class Teacher {
     @Column(name = "name",nullable = false, length = 50)
     private String name;
 
-    @Column(name = "article", nullable = false)
+    @Column(name = "article", nullable = false, length = 50)
     private String article;
 
 
