@@ -1,12 +1,10 @@
 package com.company.server.controller;
 
-import com.company.server.SentPostRequest;
 import com.company.server.entity.Remind;
 import com.company.server.service.ReminderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
