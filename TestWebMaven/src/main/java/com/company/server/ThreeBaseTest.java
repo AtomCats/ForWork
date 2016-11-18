@@ -121,6 +121,48 @@ public class ThreeBaseTest {
 
     }
 
+    @Test
+    public void saveToStudentsTest(){
+
+        Student student = new Student();
+        Student student1 = new Student();
+        Student student2 = new Student();
+
+        Teacher teacher = new Teacher();
+        Teacher teacher1 = new Teacher();
+
+        student.setId(1);
+        student.setName("Denis");
+        student.setCource(5);
+
+        student1.setId(2);
+        student1.setName("Anton");
+        student1.setCource(4);
+
+        student2.setId(3);
+        student2.setName("Kirill");
+        student2.setCource(3);
+
+        teacher.setId(1);
+        teacher.setName("Boris");
+        teacher.setArticle("History");
+
+        teacher1.setId(2);
+        teacher1.setName("Yosif");
+        teacher1.setArticle("Politology");
+
+        student.setTeachers(Arrays.asList(teacher,teacher1));
+        studentTestService.save(student);
+
+
+        student1.setTeachers(Arrays.asList(teacher1));
+        studentTestService.save(student1);
+
+
+        student2.setTeachers(Arrays.asList(teacher,teacher1));
+        studentTestService.save(student2);
+    }
+
 
 
 

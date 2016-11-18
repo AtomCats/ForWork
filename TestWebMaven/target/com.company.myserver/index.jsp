@@ -8,6 +8,33 @@
 <script type="text/javascript">
     var prefix = '/myProject/save';
 
+    $(document).ready(function(){
+    $(#'bttnSubmit').click(function(){
+    			        var data= {
+                            'id': request.getParameter("first"),
+                            'name':request.getParameter("name"),
+                            'class': request.getParameter("class")
+                        };
+
+			$.ajax({
+		             type: "POST",
+		             contentType: "application/json",
+		             url: "/myProject/students/save",
+		             data: JSON.stringify(data),
+		             dataType: 'json',
+		             timeout: 600000,
+		             success: function (data) {
+		                 $("#btn-update").prop("disabled", false);
+		                 //...
+		             },
+		             error: function (e) {
+		                 $("#btn-save").prop("disabled", false);
+		                 //...
+		             }
+			});
+    });
+    });
+
     var RestGet = function() {
         $.ajax({
             type: 'GET',
@@ -30,15 +57,15 @@
 
 
     			        var data= {
-                            'id': '1',
-                            'title':'Gavno ebanoe',
-                            'remindDate': new Date()
+                            'id': $(#'id'),
+                            'name':$(#'stud_name'),
+                            'class': $(#'class')
                         };
 
 			$.ajax({
 		             type: "POST",
 		             contentType: "application/json",
-		             url: "/myProject/reminders/save",
+		             url: "/myProject/students/save",
 		             data: JSON.stringify(data),
 		             dataType: 'json',
 		             timeout: 600000,
@@ -72,12 +99,15 @@
 
 <body>
 
-    <h3>Requests tests</h3>
-
-    <button type="button" onclick="RestGet()">GetAll</button>
-    <button type="button" onclick="RestPost()">Save</button>
-    <button type="button" onclick="RestDelete()">Delete</button>
-
+<form name = "myForm" action = RestPost() method = "POST" >
+Id: <input type="text" name="id" id = "id">
+<br />
+Name: <input type="text" name="name" id = "stud_name" />
+<br />
+Class: <input type="text" name="class" id = "class"/>
+<input type="reset" value="Clear" name = "bttnClear"  />
+<input type="submit" value="Submit" name = "bttnSubmit"  />
+</form>
 
 </body>
 </html>

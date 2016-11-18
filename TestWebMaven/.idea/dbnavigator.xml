@@ -23,11 +23,7 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="false" />
-    <loaded-nodes>
-      <connection connection-id="d9b26151-4d05-448f-98f9-2d2e6dff09c3">
-        <schema name="public" object-types="column, constraint, function, index, sequence, table, dataset trigger, view" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="d9b26151-4d05-448f-98f9-2d2e6dff09c3">
@@ -36,6 +32,7 @@
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-list connection-id="d9b26151-4d05-448f-98f9-2d2e6dff09c3" dataset="public.remind" active-filter-id="EMPTY_FILTER" />
+    <filter-list connection-id="d9b26151-4d05-448f-98f9-2d2e6dff09c3" dataset="public.student_teacher" active-filter-id="EMPTY_FILTER" />
     <filter-list connection-id="d9b26151-4d05-448f-98f9-2d2e6dff09c3" dataset="public.student" active-filter-id="EMPTY_FILTER" />
     <filter-list connection-id="d9b26151-4d05-448f-98f9-2d2e6dff09c3" dataset="public.teacher" active-filter-id="EMPTY_FILTER" />
     <filter-list connection-id="d9b26151-4d05-448f-98f9-2d2e6dff09c3" dataset="public.student_classroom" active-filter-id="EMPTY_FILTER" />
